@@ -17,9 +17,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-        binding.countText.text = viewModel.getCurrentCount().toString()
-        binding.button.setOnClickListener {
-            binding.countText.text = viewModel.getUpdatedCount().toString()
+        binding.resultText.text = viewModel.getTotal().toString()
+        binding.addButton.setOnClickListener {
+            viewModel.setTotal(binding.editText.text.toString().toInt())
+            binding.resultText.text = viewModel.getTotal().toString()
         }
     }
 }
