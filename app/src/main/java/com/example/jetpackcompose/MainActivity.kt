@@ -13,13 +13,16 @@ class MainActivity : AppCompatActivity() {
 
     //Instance of our view model
     private lateinit var viewModel: MainActivityViewModel
+    private lateinit var viewModelFactory: MainActivityViewModelFactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-        binding.countText.text = viewModel.getCurrentCount().toString()
-        binding.button.setOnClickListener {
-            binding.countText.text = viewModel.getUpdatedCount().toString()
+        viewModelFactory = MainActivityViewModelFactory(125)
+        viewModel = ViewModelProvider(this, viewModelFactory)[MainActivityViewModel::class.java]
+        binding.resultText.text = viewModel.getTotal().toString()
+        binding.addButton.setOnClickListener {
+            viewModel.setTotal(binding.editText.text.toString().toInt())
+            binding.resultText.text = viewModel.getTotal().toString()
         }
     }
 }

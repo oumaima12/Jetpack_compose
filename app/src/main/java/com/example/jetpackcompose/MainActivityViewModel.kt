@@ -2,15 +2,19 @@ package com.example.jetpackcompose
 
 import androidx.lifecycle.ViewModel
 
-class MainActivityViewModel : ViewModel() {
+class MainActivityViewModel(startingTotal: Int) : ViewModel() {
 
-    private var count = 0
+    private var total = 0
 
-    fun getCurrentCount(): Int {
-        return count
+    init {
+        total = startingTotal
     }
 
-    fun getUpdatedCount(): Int {
-        return ++count
+    fun getTotal(): Int {
+        return total
+    }
+
+    fun setTotal(input: Int) {
+        total += input
     }
 }
