@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.example.jetpackcompose.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,9 +16,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-        binding.countText.text = viewModel.getCurrentCount().toString()
+
+        viewModel.count.observe(this) {
+            binding.countText.text = it.toString()
+        }
         binding.button.setOnClickListener {
-            binding.countText.text = viewModel.getUpdatedCount().toString()
+            viewModel.updateCount()
         }
     }
 }
