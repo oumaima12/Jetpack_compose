@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.example.jetpackcompose.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -19,10 +18,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModelFactory = MainActivityViewModelFactory(125)
         viewModel = ViewModelProvider(this, viewModelFactory)[MainActivityViewModel::class.java]
-        binding.resultText.text = viewModel.getTotal().toString()
-        binding.addButton.setOnClickListener {
-            viewModel.setTotal(binding.editText.text.toString().toInt())
-            binding.resultText.text = viewModel.getTotal().toString()
-        }
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
     }
 }
